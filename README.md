@@ -8,9 +8,20 @@
 
 ## 安装
 
-1. 打开 `chrome://extensions/`
-2. 开启右上角“开发者模式”
-3. 点击“加载已解压的扩展程序”
-4. 选择本 `Proxi` 文件夹
+[![Chrome Web Store](https://developer.chrome.com/static/docs/webstore/branding/image/UV4C4ybeBTsZt43U4xis.png)](https://chromewebstore.google.com/detail/proxi/cdfidgjjopldhbmpkbpejfofoeafgkbm)
 
-全局代理配置保存在 Chrome 本地存储中，不会上传。
+扩展已经发布到 Chrome Web Store。
+
+### 从源码安装
+
+1. 点击 **Code → Download ZIP** 下载项目。
+2. 解压 ZIP 文件。
+3. 打开 Chrome：
+```text
+chrome://extensions/
+```
+4. 开启右上角 **开发者模式**。
+5. 点击 **加载已解压的扩展程序**。
+6. 选择解压后的项目目录。
+
+[![Star History Chart](https://api.star-history.com/svg?repos=codexss/Proxi&type=Date)](https://star-history.com/#codexss/Proxi&Date)
