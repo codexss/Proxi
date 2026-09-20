@@ -9,9 +9,9 @@
   "global": { "message": "Global" },
   "globalHint": { "message": "Use global proxy settings" },
   "editProxy": { "message": "Edit proxy settings" },
+  "saveProxy": { "message": "Save proxy settings" },
   "scheme": { "message": "Protocol" },
   "host": { "message": "IP address" },
   "port": { "message": "Port" },
-  "bypass": { "message": "Bypass list" },
-  "saveAndEnable": { "message": "Apply" }
+  "bypass": { "message": "Bypass list" }
 }

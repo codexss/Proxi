@@ -10,15 +10,15 @@
     <main>
       <section class="modes" aria-label="代理模式" data-i18n-aria="modesLabel">
         <button class="mode" data-mode="direct">
-          <svg class="mode-icon direct" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-4-4 4 4-4 4"/><path d="M5 7v10"/></svg>
+          <span class="mode-icon direct" aria-hidden="true"></span>
           <span><b data-i18n="direct">直接连接</b><small data-i18n="directHint">不使用代理</small></span>
         </button>
         <button class="mode" data-mode="system">
-          <svg class="mode-icon system" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+          <span class="mode-icon system" aria-hidden="true"></span>
           <span><b data-i18n="system">系统代理</b><small data-i18n="systemHint">跟随操作系统设置</small></span>
         </button>
         <div class="mode" data-mode="global" role="button" tabindex="0">
-          <svg class="mode-icon global" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v5a3 3 0 0 0 3 3h9M6 20v-5a3 3 0 0 1 3-3"/><path d="m15 9 3 3-3 3"/><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/></svg>
+          <span class="mode-icon global" aria-hidden="true"></span>
           <span><b data-i18n="global">全局代理</b><small data-i18n="globalHint">使用全局代理配置</small></span>
           <button id="editProxy" class="edit" type="button" title="编辑代理设置" aria-label="编辑代理设置" data-i18n-title="editProxy" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18.1 9.4l-3.5-3.5L4 16.5Zm16.7-9.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.6 1.6 3.5 3.5 1.5-1.7Z"/></svg>
@@ -33,7 +33,6 @@
           <label><span data-i18n="port">端口</span><input id="port" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="7890" /></label>
         </div>
         <label><span data-i18n="bypass">忽略地址</span><textarea id="bypassList" rows="2" placeholder="localhost, 127.0.0.1, &lt;local&gt;"></textarea></label>
-        <button type="submit" class="save" data-i18n="saveAndEnable">应用</button>
       </form>
     </main>
     <script src="popup.js"></script>

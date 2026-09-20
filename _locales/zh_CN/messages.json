@@ -9,9 +9,9 @@
   "global": { "message": "全局代理" },
   "globalHint": { "message": "使用全局代理配置" },
   "editProxy": { "message": "编辑代理设置" },
+  "saveProxy": { "message": "保存代理设置" },
   "scheme": { "message": "协议" },
   "host": { "message": "IP 地址" },
   "port": { "message": "端口" },
-  "bypass": { "message": "忽略地址" },
-  "saveAndEnable": { "message": "应用" }
+  "bypass": { "message": "忽略地址" }
 }

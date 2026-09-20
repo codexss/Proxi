@@ -1,8 +1,8 @@
 # Proxi
 
-一个简洁的 Chrome 代理切换扩展，支持：
+一个简洁的 Chrome 代理切换扩展，支持三种模式：
 
-- 直连
+- 直接连接
 - 系统代理
 - 全局 HTTP / HTTPS / SOCKS4 / SOCKS5 代理
 

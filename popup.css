@@ -6,13 +6,15 @@ main { padding: 8px; }
 .mode { width: 100%; min-height: 46px; border: 1px solid #e1e5ee; background: white; border-radius: 9px; padding: 7px 9px; display: flex; align-items: center; gap: 8px; text-align: left; cursor: pointer; color: inherit; transition: .15s ease; }
 .mode:hover { transform: translateY(-1px); border-color: #b8c0d2; }
 .mode.active { border-color: #5263ee; box-shadow: 0 0 0 2px #5263ee22; }
-.mode span { display: grid; flex: 1; gap: 1px; }
+.mode > span:not(.mode-icon) { display: grid; flex: 1; gap: 1px; }
 .mode b { font-size: 13px; }
 .mode small { color: #7a8296; font-size: 10px; }
-.mode-icon { width: 19px; height: 19px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.mode-icon { width: 16px; height: 16px; flex: 0 0 16px; border-radius: 50%; background: currentColor; display: block; }
 .mode-icon.direct { color: #29a36a; }.mode-icon.system { color: #64748b; }.mode-icon.global { color: #6657e8; }
 .edit { width: 28px; height: 28px; display: grid; place-items: center; flex: 0 0 auto; border: 0; border-radius: 7px; background: #f0efff; color: #6657e8; cursor: pointer; padding: 6px; }
 .edit:hover { background: #e3e0ff; }
+.edit.saving { background: #dff5e8; color: #208a50; }
+.edit.saving:hover { background: #c9eed8; }
 .edit svg { width: 16px; height: 16px; fill: currentColor; }
 .proxy-panel { display: none; margin-top: 6px; padding: 8px; border: 1px solid #e1e5ee; border-radius: 9px; background: white; }
 .proxy-panel.visible { display: block; }
@@ -23,7 +25,6 @@ input, select, textarea { width: 100%; border: 1px solid #d9deea; border-radius:
 select { padding-left: 5px; padding-right: 3px; }
 input:focus, select:focus, textarea:focus { border-color: #6657e8; box-shadow: 0 0 0 2px #6657e822; }
 textarea { margin-top: 6px; resize: vertical; }
-.save { width: 100%; margin-top: 7px; padding: 8px; border: 0; border-radius: 8px; background: #6657e8; color: white; font-size: 11px; font-weight: 700; cursor: pointer; }
 
 @media (prefers-color-scheme: dark) {
   body { background: #171922; color: #edf0f7; }
@@ -35,5 +36,6 @@ textarea { margin-top: 6px; resize: vertical; }
   input:focus, select:focus, textarea:focus { border-color: #8a7fff; box-shadow: 0 0 0 2px #8a7fff2b; }
   .edit { background: #34304f; color: #a99fff; }
   .edit:hover { background: #413b65; }
-  .save { background: #7567ef; }
+  .edit.saving { background: #214b35; color: #73d69b; }
+  .edit.saving:hover { background: #2a6043; }
 }

@@ -36,6 +36,12 @@ function render() {
   modeControls.forEach((control) => control.classList.toggle("active", control.dataset.mode === state.mode));
   form.classList.toggle("visible", editing);
   editProxy.setAttribute("aria-expanded", String(editing));
+  editProxy.classList.toggle("saving", editing);
+  editProxy.title = messageFor(editing ? "saveProxy" : "editProxy");
+  editProxy.setAttribute("aria-label", editProxy.title);
+  editProxy.innerHTML = editing
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18.1 9.4l-3.5-3.5L4 16.5Zm16.7-9.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.6 1.6 3.5 3.5 1.5-1.7Z"/></svg>';
 }
 
 function readProxySettings() {
@@ -87,8 +93,12 @@ modeControls.forEach((control) => {
 
 editProxy.addEventListener("click", (event) => {
   event.stopPropagation();
-  editing = !editing;
-  render();
+  if (!editing) {
+    editing = true;
+    render();
+    return;
+  }
+  form.requestSubmit();
 });
 
 form.addEventListener("submit", async (event) => {

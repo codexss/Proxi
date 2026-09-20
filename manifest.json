@@ -19,9 +19,9 @@
     }
   },
   "icons": {
-    "16": "icons/system-16.png",
-    "32": "icons/system-32.png",
-    "48": "icons/system-48.png",
-    "128": "icons/system-128.png"
+    "16": "icons/global-16.png",
+    "32": "icons/global-32.png",
+    "48": "icons/global-48.png",
+    "128": "icons/global-128.png"
   }
 }
