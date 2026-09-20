@@ -4,7 +4,7 @@ body { margin: 0; width: 288px; background: #f6f7fb; color: #172033; }
 main { padding: 8px; }
 .modes { display: grid; gap: 6px; }
 .mode { width: 100%; min-height: 46px; border: 1px solid #e1e5ee; background: white; border-radius: 9px; padding: 7px 9px; display: flex; align-items: center; gap: 8px; text-align: left; cursor: pointer; color: inherit; transition: .15s ease; }
-.mode:hover { transform: translateY(-1px); border-color: #b8c0d2; }
+.mode:hover { border-color: #b8c0d2; }
 .mode.active { border-color: #5263ee; box-shadow: 0 0 0 2px #5263ee22; }
 .mode > span:not(.mode-icon) { display: grid; flex: 1; gap: 1px; }
 .mode b { font-size: 13px; }
