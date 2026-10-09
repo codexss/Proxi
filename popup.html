@@ -2,25 +2,23 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Proxi</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main>
-      <section class="modes" aria-label="代理模式" data-i18n-aria="modesLabel">
+      <section class="modes" data-i18n-aria="modesLabel">
         <button class="mode" data-mode="direct">
           <span class="mode-icon direct" aria-hidden="true"></span>
-          <span class="meta"><b data-i18n="direct">直接连接</b><small data-i18n="directHint">不使用代理</small></span>
+          <span class="meta"><b data-i18n="direct"></b><small data-i18n="directHint"></small></span>
         </button>
         <button class="mode" data-mode="system">
           <span class="mode-icon system" aria-hidden="true"></span>
-          <span class="meta"><b data-i18n="system">系统代理</b><small data-i18n="systemHint">跟随操作系统设置</small></span>
+          <span class="meta"><b data-i18n="system"></b><small data-i18n="systemHint"></small></span>
         </button>
         <div class="mode" data-mode="global" role="button" tabindex="0">
           <span class="mode-icon global" aria-hidden="true"></span>
-          <span class="meta"><b data-i18n="global">全局代理</b><small data-i18n="globalHint">使用全局代理配置</small></span>
-          <button id="editProxy" class="edit" type="button" title="编辑代理设置" aria-label="编辑代理设置" data-i18n-title="editProxy" aria-expanded="false">
+          <span class="meta"><b data-i18n="global"></b><small data-i18n="globalHint"></small></span>
+          <button id="editProxy" class="edit" data-i18n-title="editProxy" aria-expanded="false">
             <svg class="edit-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18.1 9.4l-3.5-3.5L4 16.5Zm16.7-9.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.6 1.6 3.5 3.5 1.5-1.7Z"/></svg>
             <svg class="save-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -29,11 +27,12 @@
 
       <form id="proxyForm" class="proxy-panel">
         <div class="row">
-          <label><span data-i18n="scheme">协议</span><select id="scheme"><option value="http">HTTP</option><option value="https">HTTPS</option><option value="socks4">SOCKS4</option><option value="socks5">SOCKS5</option></select></label>
-          <label><span data-i18n="host">IP 地址</span><input id="host" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" maxlength="15" placeholder="127.0.0.1" /></label>
-          <label><span data-i18n="port">端口</span><input id="port" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="7890" /></label>
+          <label><span data-i18n="scheme"></span><select id="scheme"><option value="http">HTTP</option><option value="https">HTTPS</option><option value="socks4">SOCKS4</option><option value="socks5">SOCKS5</option></select></label>
+          <label><span data-i18n="host"></span><input id="host" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" maxlength="15" placeholder="127.0.0.1" required pattern="(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}" /></label>
+          <label><span data-i18n="port"></span><input id="port" type="number" min="1" max="65535" required autocomplete="off" placeholder="7890" /></label>
         </div>
-        <label><span data-i18n="bypass">忽略地址</span><textarea id="bypassList" rows="2" placeholder="localhost, 127.0.0.1, &lt;local&gt;"></textarea></label>
+        <label><span data-i18n="bypass"></span><textarea id="bypassList" rows="2" spellcheck="false" placeholder="localhost, 127.0.0.1, &lt;local&gt;"></textarea></label>
+        <button type="submit" hidden></button>
       </form>
     </main>
     <script src="popup.js"></script>

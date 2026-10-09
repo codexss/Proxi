@@ -8,25 +8,17 @@ const DEFAULTS = {
   }
 };
 
-const VALID_MODES = new Set(["direct", "system", "global"]);
-
 function validMode(mode) {
-  return VALID_MODES.has(mode) ? mode : DEFAULTS.mode;
+  return ["direct", "system", "global"].includes(mode) ? mode : DEFAULTS.mode;
 }
 
 function iconPaths(mode) {
   const name = validMode(mode);
-  return {
-    16: `icons/${name}-16.png`,
-    32: `icons/${name}-32.png`,
-    48: `icons/${name}-48.png`,
-    128: `icons/${name}-128.png`
-  };
+  return Object.fromEntries([16, 32, 48, 128].map((s) => [s, `icons/${name}-${s}.png`]));
 }
 
 function proxyConfig(mode, proxySettings) {
-  if (mode === "direct") return { mode: "direct" };
-  if (mode === "system") return { mode: "system" };
+  if (mode === "direct" || mode === "system") return { mode };
 
   return {
     mode: "fixed_servers",

@@ -5,11 +5,8 @@ const DEFAULTS = {
 
 const form = document.querySelector("#proxyForm");
 const editProxy = document.querySelector("#editProxy");
+const { scheme, host, port, bypassList } = form.elements;
 const modeControls = document.querySelectorAll(".mode");
-const fields = {
-  scheme: document.querySelector("#scheme"), host: document.querySelector("#host"),
-  port: document.querySelector("#port"), bypassList: document.querySelector("#bypassList")
-};
 let state = DEFAULTS;
 let editing = false;
 
@@ -19,21 +16,24 @@ function messageFor(key) {
 
 function localize() {
   document.documentElement.lang = chrome.i18n.getUILanguage();
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    element.textContent = messageFor(element.dataset.i18n);
-  });
-  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
-    const value = messageFor(element.dataset.i18nTitle);
-    element.title = value;
-    element.setAttribute("aria-label", value);
-  });
-  document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
-    element.setAttribute("aria-label", messageFor(element.dataset.i18nAria));
+  document.querySelectorAll("[data-i18n],[data-i18n-title],[data-i18n-aria]").forEach((element) => {
+    const { i18n, i18nTitle, i18nAria } = element.dataset;
+    if (i18n) element.textContent = messageFor(i18n);
+    if (i18nTitle) {
+      const label = messageFor(i18nTitle);
+      element.title = label;
+      element.setAttribute("aria-label", label);
+    }
+    if (i18nAria) element.setAttribute("aria-label", messageFor(i18nAria));
   });
 }
 
 function render() {
-  modeControls.forEach((control) => control.classList.toggle("active", control.dataset.mode === state.mode));
+  modeControls.forEach((control) => {
+    const active = control.dataset.mode === state.mode;
+    control.classList.toggle("active", active);
+    control.setAttribute("aria-pressed", String(active));
+  });
   form.classList.toggle("visible", editing);
   editProxy.setAttribute("aria-expanded", String(editing));
   editProxy.classList.toggle("saving", editing);
@@ -41,40 +41,21 @@ function render() {
   editProxy.setAttribute("aria-label", editProxy.title);
 }
 
+function setFormValues(proxySettings) {
+  scheme.value = proxySettings.scheme;
+  host.value = proxySettings.host;
+  port.value = proxySettings.port;
+  bypassList.value = (proxySettings.bypassList || []).join(", ");
+}
+
 function readProxySettings() {
   return {
-    scheme: fields.scheme.value,
-    host: fields.host.value.trim(),
-    port: Number(fields.port.value),
-    bypassList: fields.bypassList.value.split(",").map((item) => item.trim()).filter(Boolean)
+    scheme: scheme.value,
+    host: host.value,
+    port: Number(port.value),
+    bypassList: bypassList.value.split(",").map((item) => item.trim()).filter(Boolean)
   };
 }
-
-function isValidIPv4(value) {
-  const parts = value.split(".");
-  return parts.length === 4 && parts.every((part) => /^\d{1,3}$/.test(part) && Number(part) >= 0 && Number(part) <= 255);
-}
-
-fields.host.addEventListener("input", () => {
-  fields.host.value = fields.host.value
-    .replace(/[^0-9.]/g, "")
-    .split(".")
-    .slice(0, 4)
-    .map((part) => part.slice(0, 3))
-    .join(".");
-});
-
-fields.port.addEventListener("input", () => {
-  fields.port.value = fields.port.value.replace(/\D/g, "").slice(0, 5);
-});
-
-[fields.host, fields.port].forEach((field) => {
-  field.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" || event.isComposing) return;
-    event.preventDefault();
-    form.requestSubmit();
-  });
-});
 
 async function apply(mode, proxySettings = state.proxySettings) {
   const result = await chrome.runtime.sendMessage({ type: "applyProxy", mode, proxySettings });
@@ -90,29 +71,27 @@ async function selectMode(mode) {
 }
 
 modeControls.forEach((control) => {
-  control.addEventListener("click", () => selectMode(control.dataset.mode));
+  const activate = () => selectMode(control.dataset.mode);
+  control.addEventListener("click", activate);
   if (control.tagName !== "BUTTON") control.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); selectMode(control.dataset.mode); }
+    if (["Enter", " "].includes(event.key)) {
+      event.preventDefault();
+      activate();
+    }
   });
 });
 
 editProxy.addEventListener("click", (event) => {
   event.stopPropagation();
-  if (!editing) {
-    editing = true;
-    render();
-    return;
-  }
-  form.requestSubmit();
+  if (editing) return form.requestSubmit();
+  editing = true;
+  render();
 });
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const proxySettings = readProxySettings();
-  if (!isValidIPv4(proxySettings.host)) return;
-  if (!/^\d+$/.test(fields.port.value) || proxySettings.port < 1 || proxySettings.port > 65535) return;
   try {
-    await apply("global", proxySettings);
+    await apply("global", readProxySettings());
     editing = false;
     render();
   } catch (error) { console.error(error); }
@@ -120,11 +99,7 @@ form.addEventListener("submit", async (event) => {
 
 (async () => {
   localize();
-  const saved = await chrome.storage.local.get(DEFAULTS);
-  state = saved;
-  fields.scheme.value = state.proxySettings.scheme;
-  fields.host.value = state.proxySettings.host;
-  fields.port.value = state.proxySettings.port;
-  fields.bypassList.value = (state.proxySettings.bypassList || []).join(", ");
+  state = await chrome.storage.local.get(DEFAULTS);
+  setFormValues(state.proxySettings);
   render();
-})();
+})().catch(console.error);
