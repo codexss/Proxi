@@ -58,11 +58,20 @@ async function initialize(persist) {
   await applyMode(saved.mode, saved.proxySettings, persist);
 }
 
+let restored = false;
+function restore() {
+  if (restored) return;
+  restored = true;
+  return initialize(false);
+}
+
+restore().catch(console.error);
+
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   initialize(reason === "install").catch(console.error);
 });
 chrome.runtime.onStartup.addListener(() => {
-  initialize(false).catch(console.error);
+  restore().catch(console.error);
 });
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
