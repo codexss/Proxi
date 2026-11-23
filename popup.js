@@ -1,13 +1,14 @@
-const DEFAULTS = {
+const FALLBACK = {
   mode: "system",
   proxySettings: { scheme: "http", host: "127.0.0.1", port: 7890, bypassList: ["localhost", "127.0.0.1", "<local>"] }
 };
 
 const form = document.querySelector("#proxyForm");
 const editProxy = document.querySelector("#editProxy");
+const statusLine = document.querySelector("#status");
 const { scheme, host, port, bypassList } = form.elements;
 const modeControls = document.querySelectorAll(".mode");
-let state = DEFAULTS;
+let state = FALLBACK;
 let editing = false;
 
 function messageFor(key) {
@@ -26,6 +27,11 @@ function localize() {
     }
     if (i18nAria) element.setAttribute("aria-label", messageFor(i18nAria));
   });
+}
+
+function setStatus(code) {
+  statusLine.textContent = code ? messageFor(code) : "";
+  statusLine.hidden = !code;
 }
 
 function render() {
@@ -57,17 +63,35 @@ function readProxySettings() {
   };
 }
 
+async function request(type, payload) {
+  const result = await chrome.runtime.sendMessage({ type, ...payload });
+  if (!result || !result.ok) {
+    const error = new Error((result && result.error) || "applyFailed");
+    error.code = error.message;
+    throw error;
+  }
+  return result;
+}
+
 async function apply(mode, proxySettings = state.proxySettings) {
-  const result = await chrome.runtime.sendMessage({ type: "applyProxy", mode, proxySettings });
-  if (!result?.ok) throw new Error(result?.error || "设置失败");
-  state = { mode, proxySettings };
+  const result = await request("applyMode", { mode, proxySettings });
+  state = { mode: result.mode, proxySettings: result.proxySettings };
+  if (!editing) setFormValues(result.proxySettings);
+  setStatus("");
+  render();
+}
+
+function report(error) {
+  console.error(error);
+  setStatus((error && error.code) || "applyFailed");
 }
 
 async function selectMode(mode) {
   try {
     await apply(mode);
-    render();
-  } catch (error) { console.error(error); }
+  } catch (error) {
+    report(error);
+  }
 }
 
 modeControls.forEach((control) => {
@@ -94,12 +118,20 @@ form.addEventListener("submit", async (event) => {
     await apply("global", readProxySettings());
     editing = false;
     render();
-  } catch (error) { console.error(error); }
+  } catch (error) {
+    report(error);
+  }
 });
 
 (async () => {
   localize();
-  state = await chrome.storage.local.get(DEFAULTS);
+  try {
+    const current = await request("getState");
+    state = { mode: current.mode, proxySettings: current.proxySettings };
+    if (current.locked) setStatus("proxyLocked");
+  } catch (error) {
+    console.error(error);
+  }
   setFormValues(state.proxySettings);
   render();
-})().catch(console.error);
+})();

@@ -1,4 +1,4 @@
-:root{color-scheme:light dark;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--bg:#f6f7fb;--fg:#172033;--su:#fff;--ln:#e1e5ee;--lh:#b8c0d2;--ac:#5263ee;--ar:#5263ee22;--ht:#7a8296;--lb:#5f687b;--fb:#fbfcfe;--fl:#d9deea;--fc:#6657e8;--fr:#6657e822;--eb:#f0efff;--ef:#6657e8;--eh:#e3e0ff;--sb:#dff5e8;--sf:#208a50;--sg:#c9eed8}
+:root{color-scheme:light dark;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--bg:#f6f7fb;--fg:#172033;--su:#fff;--ln:#e1e5ee;--lh:#b8c0d2;--ac:#5263ee;--ar:#5263ee22;--ht:#7a8296;--lb:#5f687b;--fb:#fbfcfe;--fl:#d9deea;--fc:#6657e8;--fr:#6657e822;--eb:#f0efff;--ef:#6657e8;--eh:#e3e0ff;--sb:#dff5e8;--sf:#208a50;--sg:#c9eed8;--er:#bf3b41}
 *{box-sizing:border-box}
 body{margin:0;width:288px;background:var(--bg);color:var(--fg)}
 main{padding:8px}
@@ -21,6 +21,7 @@ main{padding:8px}
 .edit.saving .save-icon{display:block}
 .proxy-panel{display:none;margin-top:6px;padding:8px;border:1px solid var(--ln);border-radius:9px;background:var(--su)}
 .proxy-panel.visible{display:block}
+.status{margin:6px 2px 0;font-size:10px;line-height:1.5;color:var(--er)}
 .row{display:grid;grid-template-columns:76px 1fr 60px;gap:5px}
 .row+label{margin-top:9px}
 label{display:grid;gap:5px;color:var(--lb);font-size:11px}
@@ -29,4 +30,4 @@ select{padding-left:5px;padding-right:3px}
 input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;}
 input:focus,select:focus,textarea:focus{border-color:var(--fc);box-shadow:0 0 0 2px var(--fr)}
 textarea{margin-top:6px;resize:vertical}
-@media(prefers-color-scheme:dark){:root{--bg:#171922;--fg:#edf0f7;--su:#222530;--ln:#343847;--lh:#596073;--ac:#8074ff;--ar:#8074ff2b;--ht:#aeb5c6;--lb:#aeb5c6;--fb:#191c25;--fl:#3a3f50;--fc:#8a7fff;--fr:#8a7fff2b;--eb:#34304f;--ef:#a99fff;--eh:#413b65;--sb:#214b35;--sf:#73d69b;--sg:#2a6043}}
+@media(prefers-color-scheme:dark){:root{--bg:#171922;--fg:#edf0f7;--su:#222530;--ln:#343847;--lh:#596073;--ac:#8074ff;--ar:#8074ff2b;--ht:#aeb5c6;--lb:#aeb5c6;--fb:#191c25;--fl:#3a3f50;--fc:#8a7fff;--fr:#8a7fff2b;--eb:#34304f;--ef:#a99fff;--eh:#413b65;--sb:#214b35;--sf:#73d69b;--sg:#2a6043;--er:#f28b91}}

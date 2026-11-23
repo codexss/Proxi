@@ -13,5 +13,7 @@
   "scheme": { "message": "Protocol" },
   "host": { "message": "IP address" },
   "port": { "message": "Port" },
-  "bypass": { "message": "Bypass list" }
+  "bypass": { "message": "Bypass list" },
+  "applyFailed": { "message": "Couldn't apply proxy settings. Try again." },
+  "proxyLocked": { "message": "Proxy is controlled by another extension or a system policy." }
 }

@@ -13,5 +13,7 @@
   "scheme": { "message": "协议" },
   "host": { "message": "IP 地址" },
   "port": { "message": "端口" },
-  "bypass": { "message": "忽略地址" }
+  "bypass": { "message": "忽略地址" },
+  "applyFailed": { "message": "代理设置应用失败，请重试。" },
+  "proxyLocked": { "message": "代理已被其他扩展或系统策略接管。" }
 }
